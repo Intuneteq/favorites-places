@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import MainNavigator from "./navigation/MainNavigator";
+import { useEffect, useState } from "react";
+import { init } from "./util/db";
+import AppLoading from "expo-app-loading";
 
 export default function App() {
+  const [dbInitialized, setdbInitialized] = useState(false);
+  useEffect(() => {
+    async function initializeDb() {
+      try {
+        await init();
+      } catch (error) {
+        console.log(error);
+      }
+      setdbInitialized(true);
+    }
+
+    initializeDb();
+  }, []);
+
+  if (!dbInitialized) {
+    <AppLoading />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <>
       <StatusBar style="auto" />
-    </View>
+
+      <MainNavigator />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
