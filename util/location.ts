@@ -1,7 +1,7 @@
 import axios from "axios";
 import { LatLng } from "react-native-maps";
 
-const GOOGLE_API_KEY = "AIzaSyDHd6wzkguvLn2AM29ffdVqG99rXSWa5-8";
+const GOOGLE_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
 export function getMapPreview({ latitude, longitude }: LatLng) {
   return `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=13&size=400x200&maptype=roadmap&markers=color:red%7Clabel:S%7C${latitude},${longitude}&key=${GOOGLE_API_KEY}`;
